@@ -1,0 +1,53 @@
+--Find all the tracks that have a length of 5,000,000 milliseconds or more.
+  select Name 
+  from Tracks
+  where milliseconds > 5000000
+  
+  
+--Find all the invoices whose total is between $5 and $15 dollars.
+  SELECT InvoiceID,Total
+  FROM Invoices
+  WHERE Total > 5 AND Total < 15
+  
+  
+--Find all the customers from the following States: RJ, DF, AB, BC, CA, WA, NY.
+  select FirstName, LastName,Company 
+  from Customers
+  where State in ('RJ','DF','AB','BC','CA','WA','NY')
+  
+  
+--Find all the invoices for customer 56 and 58 where the total was between $1.00 and $5.00.
+  select * from Invoices
+  where customerID in (56,58) and Total between 1.00 and 5.00
+  
+  
+--Find all the tracks whose name starts with 'All'.
+  select Name 
+  from Tracks
+  where Name Like 'All%'
+
+
+--Find all the customer emails that start with "J" and are from gmail.com.
+  select email from
+  Customers
+  where email like 'j%@gmail.com'
+  
+  
+--Find all the invoices from the billing city Brasília, Edmonton, and Vancouver and sort in descending order by invoice ID.
+  select * from invoices 
+  where BillingCity in ('Brasilia','Edmonton','Vancouver')
+  Order by InvoiceID desc
+  
+  
+--Show the number of orders placed by each customer (hint: this is found in the invoices table) and sort the result by the number of orders in descending order.
+  SELECT CustomerId, COUNT(*) AS Orders
+  FROM Invoices
+  GROUP BY CustomerId
+  ORDER BY Orders DESC
+  
+  
+--Find the albums with 12 or more tracks.
+  SELECT AlbumId, Count(TrackID) AS NoOftracks
+  FROM Tracks
+  GROUP BY AlbumId
+  HAVING COUNT (TrackID) >= 12
