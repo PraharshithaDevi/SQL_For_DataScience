@@ -1,0 +1,63 @@
+--Using a subquery, find the names of all the tracks for the album "Californication".
+
+select name from tracks 
+where albumId 
+in (Select albumID from albums where title = "Californication")
+
+
+--Find the total number of invoices for each customer along with the customer's full name, city and email.
+
+select 
+FirstName
+,lastname
+,city
+,email
+,count(i.customerID)
+from Customers c inner join Invoices i on c.customerid = i.customerid
+group by c.customerID
+
+--Retrieve the track name, album, artistID, and trackID for all the albums.
+
+select t.name
+,a.title
+,a.artistID
+,t.trackID
+from Tracks t inner join albums a on t.albumID = a.albumID
+
+--Retrieve a list with the managers last name, and the last name of the employees who report to him or her.
+
+select m.lastname as manager
+,e.lastname as employee
+from Employees e inner join Employees m
+on m.reportsto = e.reportsto
+
+
+--Find the name and ID of the artists who do not have albums.
+
+SELECT c.name
+,c.artistID
+,a.title
+from Artists c left join albums a
+on c.artistID = a.artistID
+where a.title is null
+
+--Use a UNION to create a list of all the employee's and customer's first names and last names ordered by the last name in descending order.
+
+select firstname,lastname
+from employees
+union
+select firstname,lastname
+from customers
+order by lastname desc
+
+
+--See if there are any customers who have a different city listed in their billing city versus their customer city.
+
+select c.firstname
+,c.city
+,i.billingcity
+from customers c inner join invoices i 
+on c.customerid = i.customerid
+where i.billingcity <> c.city
+
+
